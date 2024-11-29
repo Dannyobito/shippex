@@ -34,8 +34,8 @@ const Tracking = () => {
       />
       {/* <NoDetails /> */}
       {/* <NoConnection /> */}
-      {/* <NotFound /> */}
-      <NoResults />
+      <NotFound />
+      {/* <NoResults /> */}
     </Layout>
   );
 };
