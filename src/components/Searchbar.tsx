@@ -5,10 +5,19 @@ interface SearchbarProps {
   setIsValid: React.Dispatch<React.SetStateAction<boolean>>;
   onSubmit: () => void;
   resultsFound: boolean;
+  setAwbNotFound: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Searchbar = (props: SearchbarProps) => {
-  const { awb, setAwb, isValid, setIsValid, onSubmit, resultsFound } = props;
+  const {
+    awb,
+    setAwb,
+    isValid,
+    setIsValid,
+    onSubmit,
+    resultsFound,
+    setAwbNotFound,
+  } = props;
   return (
     <header
       className={`w-full flex justify-center items-center py-8 bg-[#F8FAFC] ${
@@ -30,6 +39,7 @@ const Searchbar = (props: SearchbarProps) => {
                 onChange={(e) => {
                   setAwb(e.target.value);
                   setIsValid(true);
+                  setAwbNotFound(false);
                 }}
                 type="text"
                 className="border-0 outline-0 w-full placeholder-basicGray text-[0.9375rem] font-medium"

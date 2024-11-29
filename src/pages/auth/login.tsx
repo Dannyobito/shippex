@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 import Layout from "../../components/Layout";
 import { Logo } from "../../components/Logo";
@@ -8,6 +9,7 @@ import users from "../../assets/users.svg";
 import lock from "../../assets/lock.svg";
 import eyeOpen from "../../assets/eye-open.svg";
 import eyeClosed from "../../assets/eye-off.svg";
+import loader from "../../assets/loader.svg";
 
 const Login = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -15,12 +17,37 @@ const Login = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const isComplete = userName && password;
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const loginFormData = new FormData();
+    loginFormData.append("usr", userName);
+    loginFormData.append("pwd", password);
+    setIsSubmitting(true);
+    try {
+      const { data } = await axios.post("/api/login", loginFormData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+      if (error.status === 401) {
+        alert("Invalid Username or Password");
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   return (
     <>
       <Layout gap={false}>
         <Logo />
         <main className="w-full h-full flex justify-center items-center t-black">
-          <form className="w-fit flex flex-col gap-4 justify-center items-center">
+          <form
+            onSubmit={onSubmit}
+            className="w-fit flex flex-col gap-4 justify-center items-center"
+          >
             <div className="flex flex-col items-center">
               <h1 className="font-bold text-2xl line text-black">Sign In</h1>
               <div className="flex gap-1 text-sm leading-5">
@@ -80,13 +107,20 @@ const Login = () => {
             </div>
             <button
               disabled={!isComplete || isSubmitting}
-              className={`mt-2 px-[9.125rem] py-[0.875rem] bg-primary text-[0.9375rem] text-white font-semibold rounded-lg whitespace-nowrap disabled:bg-[#60A5FA] disabled:text-[#EFF6FF] focus-within:border-[#2563EB] focus-within:ring-4 focus-within:ring-[#3B82F6] focus-within:ring-opacity-25 ${
+              className={`mt-2 max-w-[21.375rem] flex justify-center items-center px-[9.125rem] py-[0.875rem] bg-primary text-[0.9375rem] text-white font-semibold rounded-lg whitespace-nowrap disabled:bg-[#60A5FA] disabled:text-[#EFF6FF] focus-within:border-[#2563EB] focus-within:ring-4 focus-within:ring-[#3B82F6] focus-within:ring-opacity-25 ${
                 isSubmitting
                   ? "focus-within:border-[#2563EB] focus-within:ring-4 focus-within:ring-[#3B82F6] focus-within:ring-opacity-25"
                   : ""
               }`}
             >
-              Sign In
+              {isSubmitting ? (
+                <div className="flex justify-center items-center gap-[0.625rem]">
+                  <img src={loader} className="animate-spin" />
+                  <p>Signing In</p>
+                </div>
+              ) : (
+                "Sign In"
+              )}
             </button>
           </form>
         </main>

@@ -1,6 +1,9 @@
 import noResults from "../assets/no-results.svg";
 
-const NoResults = () => {
+interface NoResultsProps {
+  onSubmit: () => void;
+}
+const NoResults = ({ onSubmit }: NoResultsProps) => {
   return (
     <div className="w-full h-full flex justify-center items-center max-h-full">
       <div className="flex flex-col gap-10 items-center">
@@ -12,7 +15,10 @@ const NoResults = () => {
               No results found. Please try again.
             </p>
           </div>
-          <button className="mt-[2.375rem] text-primary font-semibold text-[0.9375rem]">
+          <button
+            onClick={() => onSubmit()}
+            className="mt-[2.375rem] text-primary font-semibold text-[0.9375rem]"
+          >
             Retry
           </button>
         </div>
