@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Layout from "../../components/Layout";
 import { Searchbar } from "../../components/Searchbar";
 import { NoDetails } from "../../components/noDetails";
@@ -6,8 +6,25 @@ import { NoConnection } from "../../components/noConnection";
 import { NotFound } from "../../components/NotFound";
 import { NoResults } from "../../components/noResults";
 import axios from "axios";
+import { Details } from "../../components/Details";
 
 const Tracking = () => {
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
+
+  useEffect(() => {
+    const handleNetworkChange = () => {
+      setIsOnline(navigator.onLine);
+    };
+
+    window.addEventListener("online", handleNetworkChange);
+    window.addEventListener("offline", handleNetworkChange);
+
+    return () => {
+      window.removeEventListener("online", handleNetworkChange);
+      window.removeEventListener("offline", handleNetworkChange);
+    };
+  }, [isOnline]);
+
   const [awb, setAwb] = useState("");
   const [awbIsValid, setAwbIsValid] = useState(true);
   const [itemDetails, setItemDetails] = useState({});
@@ -34,12 +51,14 @@ const Tracking = () => {
           "Content-Type": "application/json",
         },
       });
-      console.log(data);
+      console.log(data.message);
+      setItemDetails(data.message);
       setAwbNotFound(false);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
       if (error.status === 404) {
         setAwbNotFound(true);
+        setItemDetails({});
       }
     }
   };
@@ -55,9 +74,15 @@ const Tracking = () => {
         resultsFound={!itemDetailsIsEmpty()}
         setAwbNotFound={setAwbNotFound}
       />
-      {!awb || (awb && !awbNotFound) ? <NoDetails /> : null}
+      {!isOnline ? (
+        <NoConnection />
+      ) : (!awb && itemDetailsIsEmpty()) ||
+        (awb && !awbNotFound && itemDetailsIsEmpty()) ? (
+        <NoDetails />
+      ) : null}
       {awbNotFound && awb ? <NoResults onSubmit={onSubmit} /> : null}
-      {/* <NoConnection /> */}
+      {!itemDetailsIsEmpty() ? <Details itemDetails={itemDetails} /> : null}
+
       {/* <NotFound /> */}
     </Layout>
   );

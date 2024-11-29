@@ -11,7 +11,10 @@ const NoConnection = () => {
               Oops! It seems you're currently offline.
             </p>
           </div>
-          <button className="mt-[2.375rem] text-primary font-semibold text-[0.9375rem]">
+          <button
+            onClick={() => window.location.reload()}
+            className="mt-[2.375rem] text-primary font-semibold text-[0.9375rem]"
+          >
             Retry
           </button>
         </div>
