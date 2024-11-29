@@ -1,16 +1,20 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import Layout from "../../components/Layout";
-
 import { Logo } from "../../components/Logo";
+
 import users from "../../assets/users.svg";
 import lock from "../../assets/lock.svg";
 import eyeOpen from "../../assets/eye-open.svg";
 import eyeClosed from "../../assets/eye-off.svg";
-import { useState } from "react";
 
 const Login = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [passwordIsVisible, setPasswordIsVisible] = useState(false);
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  const isComplete = userName && password;
   return (
     <>
       <Layout gap={false}>
@@ -32,12 +36,13 @@ const Login = () => {
               <label htmlFor="username" className="text-sm font-semibold">
                 Username
               </label>
-              <div className="px-4 py-[.875rem] flex gap-4 items-center border border-basicGray rounded-lg focus-within:border-blue-500 focus-within:ring-4 focus-within:ring-blue-100">
+              <div className="px-4 py-[.875rem] flex gap-4 items-center border border-lightGray rounded-lg focus-within:border-[#2563EB] focus-within:ring-4 focus-within:ring-[#3B82F6] focus-within:ring-opacity-25">
                 <img src={users} />
                 <input
                   className="font-medium text-[.9375rem] placeholder-basicGray border-0 outline-0 w-full"
                   placeholder="ali@brandim|"
                   type="text"
+                  onChange={(e) => setUserName(e.target.value)}
                 />
               </div>
             </div>
@@ -50,12 +55,13 @@ const Login = () => {
                   Forgot Password
                 </Link>
               </div>
-              <div className="px-4 py-[.875rem] flex gap-4 items-center border border-basicGray rounded-lg focus-within:border-blue-500 focus-within:ring-4 focus-within:ring-blue-100">
+              <div className="px-4 py-[.875rem] flex gap-4 items-center border border-lightGray rounded-lg focus-within:border-[#2563EB] focus-within:ring-4 focus-within:ring-[#3B82F6] focus-within:ring-opacity-25">
                 <img src={lock} />
                 <input
                   className="font-medium text-[.9375rem] placeholder-basicGray border-0 outline-0 w-full"
                   placeholder="your password"
                   type={passwordIsVisible ? "text" : "password"}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
                 <img
                   src={passwordIsVisible ? eyeOpen : eyeClosed}
@@ -65,6 +71,23 @@ const Login = () => {
                 />
               </div>
             </div>
+            <div className="flex gap-4 justify-start items-center w-full">
+              <input
+                type="checkbox"
+                className="w-4 h-4 border-lightGray text-lightGray"
+              />
+              <p className="font-medium leading-6">Remember Me</p>
+            </div>
+            <button
+              disabled={!isComplete || isSubmitting}
+              className={`mt-2 px-[9.125rem] py-[0.875rem] bg-primary text-[0.9375rem] text-white font-semibold rounded-lg whitespace-nowrap disabled:bg-[#60A5FA] disabled:text-[#EFF6FF] focus-within:border-[#2563EB] focus-within:ring-4 focus-within:ring-[#3B82F6] focus-within:ring-opacity-25 ${
+                isSubmitting
+                  ? "focus-within:border-[#2563EB] focus-within:ring-4 focus-within:ring-[#3B82F6] focus-within:ring-opacity-25"
+                  : ""
+              }`}
+            >
+              Sign In
+            </button>
           </form>
         </main>
       </Layout>

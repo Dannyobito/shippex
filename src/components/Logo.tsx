@@ -1,7 +1,7 @@
 import ShippexLogo from "../assets/shippex.svg";
 const Logo = () => {
   return (
-    <nav className="absolute top-12 left-12">
+    <nav className="absolute">
       <img src={ShippexLogo} />
     </nav>
   );
