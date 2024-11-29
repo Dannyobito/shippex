@@ -1,6 +1,5 @@
 import { Login } from "../pages/auth/login";
-import { SignUp } from "../pages/auth/signup";
-import { NotFound } from "../components/NotFound";
+import { Homepage } from "../pages/homepage";
 import { Tracking } from "../pages/tracking/Tracking";
 
 interface RouteType {
@@ -10,20 +9,20 @@ interface RouteType {
 
 const allRoutes: RouteType[] = [
   {
-    path: "signup",
-    Component: SignUp,
+    path: "/",
+    Component: Homepage,
   },
   {
     path: "/login",
     Component: Login,
   },
   {
-    path: "track",
+    path: "/track",
     Component: Tracking,
   },
   {
     path: "*",
-    Component: NotFound,
+    Component: Tracking,
   },
 ];
 export { allRoutes };

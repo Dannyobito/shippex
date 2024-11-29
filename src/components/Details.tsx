@@ -20,7 +20,7 @@ const Details = ({ itemDetails }: { itemDetails: any }) => {
     <main className="w-full flex flex-col items-center lg:items-start lg:flex-row lg:gap-[5.25rem] lg:justify-between">
       <section className="p-5 border border-lightGray w-full lg:min-w-[31.25rem] max-w-[31.25rem] h-fit bg-[#F8FAFC] rounded-lg">
         <h2 className="font-bold text-lg">{itemDetails?.barcode}</h2>
-        <p className="text-sm leading-5">{`Last updated ${
+        <p className="text-sm leading-5 text-basicGray ">{`Last updated ${
           formatDate(itemDetails.modified).date
         } ${formatDate(itemDetails.modified).time}`}</p>
         <div className="flex flex-col">

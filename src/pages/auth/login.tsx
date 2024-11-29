@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import Layout from "../../components/Layout";
@@ -17,6 +17,9 @@ const Login = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const isComplete = userName && password;
+
+  const navigate = useNavigate();
+
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const loginFormData = new FormData();
@@ -30,6 +33,7 @@ const Login = () => {
         },
       });
       console.log(data);
+      navigate("/track");
     } catch (error: any) {
       console.error(error);
       if (error.status === 401) {

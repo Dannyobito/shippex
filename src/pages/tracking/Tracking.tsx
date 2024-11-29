@@ -7,6 +7,8 @@ import { NotFound } from "../../components/NotFound";
 import { NoResults } from "../../components/noResults";
 import axios from "axios";
 import { Details } from "../../components/Details";
+import { Route, Routes } from "react-router-dom";
+import { CookieProtectedRoute } from "../../routes/CookieProtectedRoute";
 
 const Tracking = () => {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
@@ -74,16 +76,26 @@ const Tracking = () => {
         resultsFound={!itemDetailsIsEmpty()}
         setAwbNotFound={setAwbNotFound}
       />
-      {!isOnline ? (
-        <NoConnection />
-      ) : (!awb && itemDetailsIsEmpty()) ||
-        (awb && !awbNotFound && itemDetailsIsEmpty()) ? (
-        <NoDetails />
-      ) : null}
-      {awbNotFound && awb ? <NoResults onSubmit={onSubmit} /> : null}
-      {!itemDetailsIsEmpty() ? <Details itemDetails={itemDetails} /> : null}
-
-      {/* <NotFound /> */}
+      <Routes>
+        <Route
+          index
+          element={
+            <CookieProtectedRoute>
+              {!isOnline ? (
+                <NoConnection />
+              ) : (!awb && itemDetailsIsEmpty()) ||
+                (awb && !awbNotFound && itemDetailsIsEmpty()) ? (
+                <NoDetails />
+              ) : null}
+              {awbNotFound && awb ? <NoResults onSubmit={onSubmit} /> : null}
+              {!itemDetailsIsEmpty() ? (
+                <Details itemDetails={itemDetails} />
+              ) : null}
+            </CookieProtectedRoute>
+          }
+        />
+        <Route path="/*" element={<NotFound />} />
+      </Routes>
     </Layout>
   );
 };
