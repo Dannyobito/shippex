@@ -1,5 +1,8 @@
 import location from "../assets/location.svg";
 import sender from "../assets/sender.svg";
+import consignee from "../assets/consignee.svg";
+import truck from "../assets/truck.svg";
+import origin from "../assets/originad.svg";
 import receipt from "../assets/receipt.svg";
 import divider from "../assets/divider.svg";
 import boxAdd from "../assets/box-add.svg";
@@ -38,7 +41,7 @@ const Details = ({ itemDetails }: { itemDetails: any }) => {
           <div className="flex flex-col sm:flex-row text-[0.9375rem] font-medium">
             <div className="flex gap-[0.625rem] px-0 sm:px-4 py-[0.875rem] w-[12.8125rem]">
               <div>
-                <img src={sender} />
+                <img src={consignee} />
               </div>
               <h3 className="whitespace-nowrap text-basicGray h-fit">
                 Consignee
@@ -51,7 +54,7 @@ const Details = ({ itemDetails }: { itemDetails: any }) => {
           <div className="flex flex-col sm:flex-row text-[0.9375rem] font-medium">
             <div className="flex gap-[0.625rem] px-0 sm:px-4 py-[0.875rem] w-[12.8125rem]">
               <div>
-                <img src={location} />
+                <img src={origin} />
               </div>
               <h3 className="whitespace-nowrap text-basicGray h-fit">
                 Origin Address
@@ -107,10 +110,10 @@ const Details = ({ itemDetails }: { itemDetails: any }) => {
           <div className="flex flex-col sm:flex-row text-[0.9375rem] font-medium">
             <div className="flex gap-[0.625rem] px-0 sm:px-4 py-[0.875rem] w-[12.8125rem]">
               <div>
-                <img src={sender} />
+                <img src={truck} />
               </div>
               <h3 className="whitespace-nowrap text-basicGray h-fit">
-                Service
+                Shipping Service
               </h3>
             </div>
             <p className="t-black px-4 py-0 sm:py-[0.875rem]">
