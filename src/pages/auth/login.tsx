@@ -82,10 +82,10 @@ const Login = () => {
               <label htmlFor="username" className="text-sm font-semibold">
                 Username
               </label>
-              <div className="px-4 py-[.875rem] flex gap-4 items-center border border-lightGray rounded-lg focus-within:border-[#2563EB] focus-within:ring-4 focus-within:ring-[#3B82F6] focus-within:ring-opacity-25">
+              <div className="login-input-container">
                 <img src={users} />
                 <input
-                  className="font-medium text-[.9375rem] placeholder-basicGray border-0 outline-0 w-full"
+                  className="login-input"
                   placeholder="ali@brandim|"
                   type="text"
                   onChange={(e) => setUserName(e.target.value)}
@@ -101,10 +101,10 @@ const Login = () => {
                   Forgot Password
                 </Link>
               </div>
-              <div className="px-4 py-[.875rem] flex gap-4 items-center border border-lightGray rounded-lg focus-within:border-[#2563EB] focus-within:ring-4 focus-within:ring-[#3B82F6] focus-within:ring-opacity-25">
+              <div className="login-input-container">
                 <img src={lock} />
                 <input
-                  className="font-medium text-[.9375rem] placeholder-basicGray border-0 outline-0 w-full"
+                  className="login-input"
                   placeholder="your password"
                   type={passwordIsVisible ? "text" : "password"}
                   onChange={(e) => setPassword(e.target.value)}
@@ -126,7 +126,7 @@ const Login = () => {
             </div>
             <button
               disabled={!isComplete || isSubmitting}
-              className={`mt-2 max-w-[21.375rem] flex justify-center items-center px-[9.125rem] py-[0.875rem] bg-primary text-[0.9375rem] text-white font-semibold rounded-lg whitespace-nowrap disabled:bg-[#60A5FA] disabled:text-[#EFF6FF] focus-within:border-[#2563EB] focus-within:ring-4 focus-within:ring-[#3B82F6] focus-within:ring-opacity-25 ${
+              className={` login-button ${
                 isSubmitting
                   ? "focus-within:border-[#2563EB] focus-within:ring-4 focus-within:ring-[#3B82F6] focus-within:ring-opacity-25"
                   : ""

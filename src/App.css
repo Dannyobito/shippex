@@ -16,6 +16,15 @@ body {
 .t-black {
   @apply text-altBlack;
 }
+.login-button {
+  @apply mt-2 max-w-[21.375rem] flex justify-center items-center px-[9.125rem] py-[0.875rem] bg-primary text-[0.9375rem] text-white font-semibold rounded-lg whitespace-nowrap disabled:bg-[#60A5FA] disabled:text-[#EFF6FF] focus-within:border-[#2563EB] focus-within:ring-4 focus-within:ring-[#3B82F6] focus-within:ring-opacity-25;
+}
+.login-input-container {
+  @apply px-4 py-[.875rem] flex gap-4 items-center border border-lightGray rounded-lg focus-within:border-[#2563EB] focus-within:ring-4 focus-within:ring-[#3B82F6] focus-within:ring-opacity-25;
+}
+.login-input {
+  @apply font-medium text-[.9375rem] placeholder-basicGray border-0 outline-0 w-full;
+}
 ::-webkit-scrollbar {
   display: none;
 }
