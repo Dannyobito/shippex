@@ -17,7 +17,7 @@ const scanIcons: Record<number, string> = {
 
 const Details = ({ itemDetails }: { itemDetails: any }) => {
   return (
-    <main className="w-full flex flex-col items-center lg:items-start lg:flex-row lg:gap-[5.25rem] lg:justify-between">
+    <main className="w-full flex flex-col items-center lg:items-start lg:flex-row lg:gap-[5.25rem] lg:justify-between max-h-full lg:overflow-y-hidden">
       <section className="p-5 border border-lightGray w-full lg:min-w-[31.25rem] max-w-[31.25rem] h-fit bg-[#F8FAFC] rounded-lg">
         <h2 className="font-bold text-lg">{itemDetails?.barcode}</h2>
         <p className="text-sm leading-5 text-basicGray ">{`Last updated ${
@@ -132,9 +132,9 @@ const Details = ({ itemDetails }: { itemDetails: any }) => {
           </div>
         </div>
       </section>
-      <section className="pt-5 flex flex-col items-center lg:items-start gap-5 w-full max-w-[37.5rem] h-fit">
+      <section className="pt-5 flex flex-col items-center lg:items-start gap-5 w-full max-w-[37.5rem] max-h-full">
         <h2 className="font-bold text-lg">TIMELINE</h2>
-        <div>
+        <div className="h-full lg:overflow-y-scroll">
           {itemDetails?.scans?.map((scan: any, i: number) => (
             <div className="flex justify-start">
               <div className="flex flex-col font-medium text-sm leading-5 w-[6.3125rem] text-basicGray">
