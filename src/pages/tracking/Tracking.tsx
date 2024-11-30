@@ -55,7 +55,6 @@ const Tracking = () => {
           "Content-Type": "application/json",
         },
       });
-      console.log(data.message);
       setItemDetails(data.message);
       setAwbNotFound(false);
     } catch (error: any) {

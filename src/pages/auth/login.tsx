@@ -30,12 +30,11 @@ const Login = () => {
     loginFormData.append("pwd", password);
     setIsSubmitting(true);
     try {
-      const { data } = await axios.post("/api/login", loginFormData, {
+      const response = await axios.post("/api/login", loginFormData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log(data);
     } catch (error: any) {
       console.error(error);
       if (error.status === 401) {
