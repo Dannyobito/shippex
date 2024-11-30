@@ -70,7 +70,7 @@ const Login = () => {
             <div className="flex flex-col items-center">
               <h1 className="font-bold text-2xl line text-black">Sign In</h1>
               <div className="flex gap-1 text-sm leading-5">
-                <small className="text-[#4B5563]">
+                <small className="text-[#4B5563] text-sm leading-5">
                   Don't have an Account yet?
                 </small>
                 <Link to="/signup" className="text-primary font-semibold">

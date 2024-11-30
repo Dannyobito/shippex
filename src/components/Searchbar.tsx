@@ -20,7 +20,7 @@ const Searchbar = (props: SearchbarProps) => {
   } = props;
   return (
     <header
-      className={`w-full flex justify-center items-center py-8 bg-[#F8FAFC] ${
+      className={`w-full flex justify-center items-center py-8 bg-[#F8FAFC] rounded-lg ${
         resultsFound ? "" : "absolute"
       }`}
     >
