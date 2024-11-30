@@ -15,7 +15,9 @@ const Tracking = () => {
 
   useEffect(() => {
     const handleNetworkChange = () => {
+      setAwbNotFound(false);
       setIsOnline(navigator.onLine);
+      window.location.reload();
     };
 
     window.addEventListener("online", handleNetworkChange);

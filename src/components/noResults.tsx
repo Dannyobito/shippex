@@ -10,7 +10,9 @@ const NoResults = ({ onSubmit }: NoResultsProps) => {
         <img src={noResults} />
         <div className="flex flex-col justify-center items-center">
           <div className="flex flex-col justify-center items-center gap-2">
-            <h1 className="text-2xl font-bold text-black">No results found</h1>
+            <h1 className="text-2xl font-bold text-[#111111]">
+              No results found
+            </h1>
             <p className="text-sm text-basicGray leading-5">
               No results found. Please try again.
             </p>

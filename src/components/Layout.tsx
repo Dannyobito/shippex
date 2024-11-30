@@ -6,7 +6,7 @@ const Layout: React.FC<LayoutPropType> = ({ children, gap }) => {
   return (
     <div
       className={`p-12 w-screen h-screen max-w-screen-xl max-h-screen overflow-x-hidden flex justify-center items-center ${
-        gap ? "gap-6" : ""
+        gap ? "gap-6 t-black" : ""
       }`}
     >
       <div

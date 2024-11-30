@@ -16,3 +16,6 @@ body {
 .t-black {
   @apply text-altBlack;
 }
+::-webkit-scrollbar {
+  display: none;
+}
