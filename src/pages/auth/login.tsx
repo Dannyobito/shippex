@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -10,8 +10,11 @@ import lock from "../../assets/lock.svg";
 import eyeOpen from "../../assets/eye-open.svg";
 import eyeClosed from "../../assets/eye-off.svg";
 import loader from "../../assets/loader.svg";
+import { useCookies } from "react-cookie";
 
 const Login = () => {
+  const [cookies] = useCookies(["user_id", "full_name"]);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [passwordIsVisible, setPasswordIsVisible] = useState(false);
   const [userName, setUserName] = useState("");
@@ -33,7 +36,6 @@ const Login = () => {
         },
       });
       console.log(data);
-      navigate("/track");
     } catch (error: any) {
       console.error(error);
       if (error.status === 401) {
@@ -41,8 +43,22 @@ const Login = () => {
       }
     } finally {
       setIsSubmitting(false);
+      navigate("/track");
     }
   };
+
+  useEffect(() => {
+    const isUserLoggedIn = (): boolean => {
+      const userId = cookies.user_id;
+      const fullName = cookies.full_name;
+      return Boolean(
+        userId && fullName && userId !== "Guest" && fullName !== "Guest"
+      );
+    };
+    if (isUserLoggedIn()) {
+      navigate("/track");
+    }
+  }, [cookies]);
   return (
     <>
       <Layout gap={false}>
