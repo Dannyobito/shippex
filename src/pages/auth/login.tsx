@@ -6,11 +6,9 @@ import Layout from "../../components/Layout";
 import { Logo } from "../../components/Logo";
 
 import users from "../../assets/users.svg";
-import lock from "../../assets/lock.svg";
-import eyeOpen from "../../assets/eye-open.svg";
-import eyeClosed from "../../assets/eye-off.svg";
 import loader from "../../assets/loader.svg";
 import { useCookies } from "react-cookie";
+import { GeneralInput, PasswordInput } from "../../components/Inputs";
 
 const Login = () => {
   const [cookies] = useCookies(["user_id", "full_name"]);
@@ -19,9 +17,21 @@ const Login = () => {
   const [passwordIsVisible, setPasswordIsVisible] = useState(false);
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
   const isComplete = userName && password;
 
   const navigate = useNavigate();
+
+  const setUsernameInStorage = (userName: string, rememberMe: boolean) => {
+    if (rememberMe) {
+      localStorage.setItem("shippex_username", userName);
+    } else {
+      localStorage.removeItem("shippex_username");
+    }
+  };
+  const getUsernameFromStorage = (): string => {
+    return localStorage.getItem("shippex_username") ?? "";
+  };
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -35,6 +45,9 @@ const Login = () => {
           "Content-Type": "multipart/form-data",
         },
       });
+      if (response.status === 200 || response.data.message === "Logged In") {
+        setUsernameInStorage(userName, rememberMe);
+      }
     } catch (error: any) {
       console.error(error);
       if (error.status === 401) {
@@ -45,6 +58,13 @@ const Login = () => {
       navigate("/track");
     }
   };
+
+  useEffect(() => {
+    const rememberedUsername = getUsernameFromStorage();
+    if (rememberedUsername) {
+      setUserName(rememberedUsername);
+    }
+  }, []);
 
   useEffect(() => {
     const isUserLoggedIn = (): boolean => {
@@ -78,48 +98,25 @@ const Login = () => {
                 </Link>
               </div>
             </div>
-            <div className="flex flex-col gap-[.625rem] w-full">
-              <label htmlFor="username" className="text-sm font-semibold">
-                Username
-              </label>
-              <div className="login-input-container">
-                <img src={users} />
-                <input
-                  className="login-input"
-                  placeholder="ali@brandim|"
-                  type="text"
-                  onChange={(e) => setUserName(e.target.value)}
-                />
-              </div>
-            </div>
-            <div className="flex flex-col gap-[.625rem] w-full">
-              <div className="flex justify-between text-sm font-semibold">
-                <label htmlFor="username" className="">
-                  Password
-                </label>
-                <Link to="/signup" className="text-primary">
-                  Forgot Password
-                </Link>
-              </div>
-              <div className="login-input-container">
-                <img src={lock} />
-                <input
-                  className="login-input"
-                  placeholder="your password"
-                  type={passwordIsVisible ? "text" : "password"}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                <img
-                  src={passwordIsVisible ? eyeOpen : eyeClosed}
-                  onClick={() => {
-                    setPasswordIsVisible(!passwordIsVisible);
-                  }}
-                />
-              </div>
-            </div>
+            <GeneralInput
+              label="username"
+              placeholder="ali@brandim|"
+              icon={users}
+              type="text"
+              value={userName}
+              setValue={setUserName}
+            />
+            <PasswordInput
+              password={password}
+              setPassword={setPassword}
+              passwordIsVisible={passwordIsVisible}
+              setPasswordIsVisible={setPasswordIsVisible}
+            />
             <div className="flex gap-4 justify-start items-center w-full">
               <input
                 type="checkbox"
+                checked={rememberMe}
+                onChange={() => setRememberMe(!rememberMe)}
                 className="w-4 h-4 border-lightGray text-lightGray"
               />
               <p className="font-medium leading-6">Remember Me</p>
