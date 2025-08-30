@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 
 import Layout from "../../components/Layout";
 import { Logo } from "../../components/Logo";
@@ -9,9 +8,11 @@ import users from "../../assets/users.svg";
 import loader from "../../assets/loader.svg";
 import { useCookies } from "react-cookie";
 import { GeneralInput, PasswordInput } from "../../components/Inputs";
+import { mockLogin } from "../../services/mockApi";
+import { APP_CONSTANTS } from "../../constants";
 
 const Login = () => {
-  const [cookies] = useCookies(["user_id", "full_name"]);
+  const [cookies, setCookie] = useCookies(["user_id", "full_name"]);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [passwordIsVisible, setPasswordIsVisible] = useState(false);
@@ -35,27 +36,23 @@ const Login = () => {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const loginFormData = new FormData();
-    loginFormData.append("usr", userName);
-    loginFormData.append("pwd", password);
     setIsSubmitting(true);
     try {
-      const response = await axios.post("/api/login", loginFormData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      if (response.status === 200 || response.data.message === "Logged In") {
+      const response = await mockLogin(userName, password);
+      if (response.success && response.user) {
         setUsernameInStorage(userName, rememberMe);
+        // Set cookies for authentication
+        setCookie("user_id", response.user.user_id, { path: "/" });
+        setCookie("full_name", response.user.full_name, { path: "/" });
+        navigate("/track");
+      } else {
+        alert(response.message || "Invalid Username or Password");
       }
     } catch (error: any) {
       console.error(error);
-      if (error.status === 401) {
-        alert("Invalid Username or Password");
-      }
+      alert("Login failed. Please try again.");
     } finally {
       setIsSubmitting(false);
-      navigate("/track");
     }
   };
 
@@ -138,6 +135,18 @@ const Login = () => {
                 "Sign In"
               )}
             </button>
+
+            {/* GitHub Repository Link */}
+            <div className="mt-6 text-center">
+              <a
+                href={APP_CONSTANTS.GITHUB_REPO_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-primary hover:text-blue-700 font-medium underline"
+              >
+                View README
+              </a>
+            </div>
           </form>
         </main>
       </Layout>

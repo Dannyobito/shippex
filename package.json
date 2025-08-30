@@ -1,8 +1,9 @@
 {
-  "name": "vite-project",
-  "private": true,
-  "version": "0.0.0",
+  "name": "shippex-assessment",
+  "private": false,
+  "version": "1.0.0",
   "type": "module",
+  "description": "Shippex shipping tracking application - Portfolio project with mock data",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -33,3 +34,4 @@
     "vite": "^6.0.1"
   }
 }
+

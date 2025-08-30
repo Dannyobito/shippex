@@ -5,10 +5,11 @@ import { NoDetails } from "../../components/noDetails";
 import { NoConnection } from "../../components/noConnection";
 import { NotFound } from "../../components/NotFound";
 import { NoResults } from "../../components/noResults";
-import axios from "axios";
 import { Details } from "../../components/Details";
 import { Route, Routes } from "react-router-dom";
 import { CookieProtectedRoute } from "../../routes/CookieProtectedRoute";
+import { mockTrackShipment } from "../../services/mockApi";
+import { Header } from "../../components/Header";
 
 const Tracking = () => {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
@@ -43,31 +44,26 @@ const Tracking = () => {
       return;
     }
     setAwbIsValid(true);
-    const payload = {
-      doctype: "AWB",
-      filters: {
-        name: ["like", `%${awb}%`],
-      },
-    };
+
     try {
-      const { data } = await axios.post("/api/frappe.client.get", payload, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      setItemDetails(data.message);
-      setAwbNotFound(false);
-    } catch (error: any) {
-      console.error(error);
-      if (error.status === 404) {
+      const response = await mockTrackShipment(awb);
+      if (response.success && response.data) {
+        setItemDetails(response.data);
+        setAwbNotFound(false);
+      } else {
         setAwbNotFound(true);
         setItemDetails({});
       }
+    } catch (error: any) {
+      console.error(error);
+      setAwbNotFound(true);
+      setItemDetails({});
     }
   };
   const itemDetailsIsEmpty = () => Object.keys(itemDetails).length === 0;
   return (
     <Layout gap={true}>
+      <Header />
       <Searchbar
         awb={awb}
         setAwb={setAwb}

@@ -22,7 +22,7 @@ const allRoutes: RouteType[] = [
   },
   {
     path: "*",
-    Component: Tracking,
+    Component: Homepage,
   },
 ];
 export { allRoutes };
